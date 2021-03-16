@@ -3,7 +3,7 @@
 ---
 
 @charset "utf-8";
-/* dirt syntax highlighting (base16) */
+
 $base00: #231e18;
 $base01: #302b25;
 $base02: #48413a;
@@ -20,5 +20,6 @@ $base0c: #6eb958;
 $base0d: #88a4d3;
 $base0e: #bb90e2;
 $base0f: #b49368;
+
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials
