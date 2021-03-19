@@ -1,5 +1,5 @@
 ---
-title: "5 Principles to write SOLID code"
+title: "5 Principles to write SOLID Python"
 excerpt: "The SOLID design principles explained with examples in Python."
 categories:
   - Blog
@@ -172,4 +172,168 @@ assert browser.browse(albums=albums, searchby=my_search_criteria) == [LAWoman]
 ```
 
 ### 3. Liskov Substituion Principle
+
+This principle is by Barbara Liskov, who formulated her principle very formally:
+>“Let φ(x) be a property provable about objects x of type T. Then φ(y) should be true for objects y of type S where S is a subtype of T.”
+
+This means that if we have a base class T and subclass S, you should be able to substitute the main class T with the subclass S without breaking the code. The interface of a subclass should be the same as the interface of the base class, and the subclass should behave in the same way as the base class.
+
+If you have a method in T that is being overridden in S, then both methods should take the same inputs, and return the same type of output. The subclass can return only a subset of the return values of the base class, but it should accept all the inputs the base class does.
+
+In the classic example with rectanges and squares, we create a Rectange class, with width and height setters. If you have a square, the width setter also needs to resize the height, and vice versa to keep the square property. This forces us to make a choice: we either keep the implementation of the Rectangle class, but then Square stops being a square when you use the setter on it, or you change the setters to make height and width the same for squares. This could lead to some unexpected behaviour if you have a function that resizes the height of your shape. 
+
+```python
+class Rectangle:
+    def __init__(self, height, width):
+        self._height = height
+        self._width = width
+
+    @property
+    def width(self):
+        return self._width
+
+    @width.setter
+    def width(self, value):
+        self._width = value
+
+    @property
+    def height(self):
+        return self._height
+
+    @height.setter
+    def height(self, value):
+        self._height = value
+
+    def get_area(self):
+        return self._width * self._height
+
+
+class Square(Rectangle):
+    def __init__(self, size):
+        Rectangle.__init__(self, size, size)
+
+    @Rectangle.width.setter
+    def width(self, value):
+        self._width = value
+        self._height = value
+
+    @Rectangle.height.setter
+    def height(self, value):
+        self._width = value
+        self._height = value
+
+
+def get_squashed_height_area(Rectangle):
+    Rectangle.height = 1
+    area = Rectangle.get_area()
+    return area
+
+
+rectangle = Rectangle(5, 5)
+square = Square(5)
+
+assert get_squashed_height_area(rectangle) == 5  # expected 5
+assert get_squashed_height_area(square) == 1  # expected 5
+```
+
+While this might not seem a big deal (surely you can just remember sqaure changes the width too?!), this becomes a bigger issue when the functions are more complicated or when you are using some else's code, and just assume the subclass behaves the same.
+
+A short, but intuitive example I really like from the [Circle-ellipse problem Wiki article](https://en.wikipedia.org/wiki/Circle%E2%80%93ellipse_problem#Description):
+
+```python 
+class Person():
+    def walkNorth(meters):
+        pass
+    def walkSouth(meters):
+        pass
+
+class Prisoner(Person):
+    def walkNorth(meters):
+        pass 
+    def walkSouth(meters):
+        pass
+```
+Obvisouly, we cannot implement the walk methods on prisoners, as they are not free to walk as arbitrary distances in arbitrary directions. We shouldn't be allowed to call walk methods on the class, the interface is wrong. Which leads us to our next principle...
+
+### 4. Interface Segregation Principle
+
+> “Clients should not be forced to depend upon interfaces that they do not use.”
+
+If you have a base class with many methods, possibly not all of your subclasses are going to need them, maybe just a few. But due to inheritance, you will be able to call these methods on all the subclasses, even on those that don't need it. This means a lot of interfaces that are unused, unneeded and will result in bugs when they get accidentally called.  
+
+This principle is meant to prevent this from happening. We should make interfaces as small as possible, so that we don't need to implement functions we don't need. Insteasd of one big base class, we should define multiple ones, with the methods that make sense for each, and then have our subclasses inherit from them.
+
+In the next example, we wil be using abstract methods. Abstract methods create an interface in a base class that have no implementation, but are forced to be implemented in every subclass that inherits from the base class.
+
+```python
+class PlaySongs:
+    def __init__(self, title):
+        self.title = title
+
+    def play_drums(self):
+        print("Ba-dum ts")
+
+    def play_guitar(self):
+        print("*Soul-moving guitar solo*")
+
+    def sing_lyrics(self):
+        print("NaNaNaNa")
+
+# This class is fine, just changing the guitsr and lyrics
+class PlayRockSongs(PlaySongs): 
+    def play_guitar(self):
+        print("*Very metal guitar solo*")
+
+    def sing_lyrics(self):
+        print("I wanna rock and roll all night")
+
+# This breaks the ISP, we don't have lyrics 
+class PlayInstrumentalSongs(PlaySongs):
+    def sing_lyrics(self):
+        raise Exception("No lyrics for instrumental songs")
+
+```
+Instead, we could have a class for the singing and the music separately (assuming guitar and drums always happen together in our case, otherwise we need to split them up even more, perhaps by instrument.)
+This way, we only have the interfaces we need.
+
+```python
+from abc import ABCMeta
+
+
+class PlaySongsLyrics:
+    @abstractmethod
+    def sing_lyrics(self, title):
+        pass
+
+
+class PlaySongsMusic:
+    @abstractmethod
+    def play_guitar(self, title):
+        pass
+
+    @abstractmethod
+    def play_drums(self, title):
+        pass
+
+
+class PlayInstrumentalSong(PlaySongsMusic):
+    def play_drums(self, title):
+        print("Ba-dum ts")
+
+    def play_guitar(self, title):
+        print("*Soul-moving guitar solo*")
+
+
+class PlayRockSong(PlaySongsMusic, PlaySongsLyrics):
+    def play_guitar(self):
+        print("*Very metal guitar solo*")
+
+    def sing_lyrics(self):
+        print("I wanna rock and roll all night")
+
+    def play_drums(self, title):
+        print("Ba-dum ts")
+
+```
+### 5. Dependency Inversion Principle
 
