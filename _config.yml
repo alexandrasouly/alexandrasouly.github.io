@@ -104,3 +104,11 @@ category_archive:
 tag_archive:
   type: liquid
   path: /tags/
+
+repository: alexandrasouly/alexandrasouly.github.io
+
+comments:
+  provider: "utterances"
+  utterances:
+    theme: "github-dark-orange" # "github-dark"
+    issue_term: "pathname"

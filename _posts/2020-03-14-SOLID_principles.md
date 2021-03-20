@@ -8,6 +8,8 @@ tags:
   - coding
 permalink: /solid_principles
 published: true
+comments: true
+
 ---
 
 As someone who recently started working as a Software Engineer with no formal Computer Science background, I have struggled a lot with coming up with sensible low-level designs and structuring code the right way. Initially, it helped me a lot to think of a checklist of 5 principles to follow, which I will share with you in this post.
