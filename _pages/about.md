@@ -3,6 +3,13 @@ permalink: /about/
 title: "About"
 ---
 
-Tempor velit sint sunt ipsum tempor enim ad qui ullamco. Est dolore anim ad velit duis dolore minim sunt aliquip amet commodo labore. Ut eu pariatur aute ea aute excepteur laborum. Esse ea esse excepteur minim mollit qui cillum excepteur ex dolore magna. Labore deserunt fugiat incididunt incididunt sint ea. Consequat dolore aute laboris quis proident quis non et est consectetur ex eiusmod sit culpa.
+Hi there! 
+Welcome to my blog, I'm Alexandra. When I'm working, I'm a Software Enginner at Microsoft Cloud & AI, working on telecommunication solutions.
 
-Cupidatat ea do et in excepteur in. Ad nostrud ut est esse eu duis ea sunt eiusmod. Aliquip tempor veniam sint elit fugiat. Velit incididunt laboris amet incididunt labore dolore irure velit excepteur commodo deserunt laborum. Consectetur eu fugiat veniam veniam Lorem labore magna eiusmod. Ea occaecat reprehenderit pariatur consectetur minim labore ut aliquip.
+This is my tiny corner of the internet where I write about my hobby learning projects, mostly in Machine Learning, Statistics and Technology. These are mostly written with the purpose of consolidating my own understanding and practicing technical communication, but I'd very happy if you found something helpful!
+
+As you can see, I have only started writing recently, so there is no much content yet. But watch this space! I spend a lot of time learning exciting things, and I can't wait to see what this little project grows into. 
+
+If you like my writings, please connect with me on Linkedin or leave a comment, I'd be delighted to hear from you!
+
+
