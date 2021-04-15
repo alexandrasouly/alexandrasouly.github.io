@@ -19,8 +19,8 @@ As someone who recently started working as a Software Engineer with no formal Co
 SOLID is the acronym for a collection of 5 object-oriented design principles, first conceptualised by Robert C. Martin about 20 years ago, and they have shaped the way we write software today.
 
 <figure>
-	<a<img src="http://alexandrasouly.github.io/images/thisisengineering-raeng-64YrPKiguAE-unsplash.jpg"></a>
-	<figcaption><a title="Photo by ThisisEngineering RAEng on Unsplash">Photo by ThisisEngineering RAEng on Unsplash</a>.</figcaption>
+	<img src="http://alexandrasouly.github.io/images/thisisengineering-raeng-64YrPKiguAE-unsplash.jpg">
+	<figcaption >Photo by ThisisEngineering RAEng on Unsplash</figcaption>
 </figure>
 
 They are meant to help creating simpler, more easily understandable, maintainable and expandable code. This becomes essential when a large group of people is working on codebases that are always growing and evolving, often made up of hundreds of thousands (if not millions) of lines of code. The principles are signposting the way to maintaining good practice, and writing better quality code.
@@ -48,40 +48,37 @@ class Album:
         self.artist = artist
         self.songs = songs
 
-
     def add_song(self, song):
         self.songs.append(song)
 
-
     def remove_song(self, song):
-        self.songs.remove(song) 
-
+        self.songs.remove(song)
 
     def __str__(self) -> str:
         return f"Album {self.name} by {self.artist}\nTracklist:\n{self.songs}"
 
-
     # breaks the SRP
     def search_album_by_artist(self):
         """ Searching the database for other albums by same artist """
-        
+
         pass
 ```
-In the above example, I have created a class `Album`. This stores the album name, artist and tracklist, and can manipulate the contents of the album, such as adding songs or deleting. Now, if I add a function to search albums from the same artist, I break the Single Responsibility Principle. My class would have to change if I decide to store albums in a different way (for example by adding the record label or storing the tracklist as a dictionary of track name and length), and my class would also need to change if I change the database where I store these albums ( for example I move to an online database from an Excel sheet). It is clear that these are two distinct responsabilities.  
+In the above example, I have created a class Album. This stores the album name, artist and track list, and can manipulate the contents of the album, such as adding songs or deleting. Now, if I add a function to search albums from the same artist, I break the Single Responsibility Principle. My class would have to change if I decide to store albums in a different way (for example by adding the record label or storing the track list as a dictionary of track name and length), and my class would also need to change if I change the database where I store these albums ( for example I move to an online database from an Excel sheet). It is clear that these are two distinct responsibilities.  
 Instead, I should create a class for interacting with the Albums database. This could be expanded with searching albums by starting letter, number of tracks, etc. (see next principle on how exactly)
 
 ```python
 # instead:
 class AlbumBrowser:
     """ Class for browsing the Albums database"""
+
     def search_album_by_artist(self, albums, artist):
         pass
-    
+
     def search_album_starting_with_letter(self, albums, letter):
         pass
  ```
 
-One caveat: Making classes overly simple is making the code just as hard to read, as one would have to follow a long chain of objects passed to one another, and could lead to a fragmented codebase with single-method classes. This principle does not mean that every class should do *one single thing* as in one method, but *one concept*.
+One caveat: Making classes overly simple is making the code just as hard to read, as one would have to follow a long chain of objects passed to one another, and could lead to a fragmented codebase with single-method classes. This principle does not mean that every class should do one single thing as in one method, but one concept.
 
 ### 2.Open-Closed Principle
 
@@ -99,7 +96,8 @@ class Album:
         self.songs = songs
         self.genre = genre
 
-#before
+
+# before
 class AlbumBrowser:
     def search_album_by_artist(self, albums, artist):
         return [album for album in albums if album.artist == artist]
@@ -109,42 +107,51 @@ class AlbumBrowser:
 
 ```
 
-Now what happens if I want to search *by artist and genre*? What if I add *release year*? I will have to write new function every time (in total $$2^n-1$$ to be precise), and the number grows exponentially.
+Now what happens if I want to search by artist and genre? What if I add release year? I will have to write new function every time (in total (2^n)-1 to be precise), and the number grows exponentially.  
 
-Instead, I should define a base class with a common interface for my specification, and then define subclasses for each type of specification that inherits ths interface from the base class:
+Instead, I should define a base class with a common interface for my specification, and then define subclasses for each type of specification that inherits this interface from the base class:
 
 ```python
-#after
+# after
 class SearchBy:
     def is_matched(self, album):
         pass
-      
+
+
 class SearchByGenre(SearchBy):
-    def is_matched(self, album, genre):
-        return album.genre == genre
-    
+    def __init__(self, genre):
+        self.genre = genre
+
+    def is_matched(self, album):
+        return album.genre == self.genre
+
+
 class SearchByArtist(SearchBy):
-    def is_matched(self, album, artist):
-        return album.genre == artist
-    
+    def __init__(self, artist):
+        self.artist = artist
+
+    def is_matched(self, album):
+        return album.artist == self.artist
+
+
 class AlbumBrowser:
     def browse(self, albums, searchby):
         return [album for album in albums if searchby.is_matched(album)]
-    
 ```
 
-This allows us to extend the searches with another class when we want (e.g. by release date). Any new search class will need to satisfy the interface defined by Searchby, so we won't have surprises when interacting with our existing code. To browse by a criteria, we now need to create a SearchBy object first and pass that into AlbumBrowser.  
+This allows us to extend the searches with another class when we want (e.g. by release date). Any new search class will need to satisfy the interface defined by Searchby, so we won’t have surprises when interacting with our existing code. To browse by a criteria, we now need to create a SearchBy object first and pass that into AlbumBrowser. 
 
 But what about multiple criteria? I really like this solution I saw in this [Design Patterns Udemy Course](https://www.udemy.com/course/design-patterns-python/). This allows use to join browsing criterias to be joined together by `&`:
 
 ```python
-#add __and__:
+# add __and__:
 class SearchBy:
     def is_matched(self, album):
         pass
-    
+
     def __and__(self, other):
         return AndSearchBy(self, other)
+
 
 class AndSearchBy(SearchBy):
     def __init__(self, searchby1, searchby2):
@@ -152,7 +159,9 @@ class AndSearchBy(SearchBy):
         self.searchby2 = searchby2
 
     def is_matched(self, album):
-        return self.searchby1.is_matched(album) and self.searchby2.is_matched(album)
+        return self.searchby1.is_matched(album) and self.searchby2.is_matched(
+            album
+        )
 ```
 
 This `&` method can be a bit confusing, so the following example demonstrates the usage:
@@ -164,7 +173,6 @@ LAWoman = Album(
     songs=["Riders on the Storm"],
     genre="Rock",
 )
-
 Trash = Album(
     name="Trash",
     artist="Alice Cooper",
@@ -172,12 +180,10 @@ Trash = Album(
     genre="Rock",
 )
 albums = [LAWoman, Trash]
-
 # this creates the AndSearchBy object
 my_search_criteria = SearchByGenre(genre="Rock") & SearchByArtist(
     artist="The Doors"
 )
-
 browser = AlbumBrowser()
 assert browser.browse(albums=albums, searchby=my_search_criteria) == [LAWoman]
 # yay we found our album
@@ -187,6 +193,11 @@ assert browser.browse(albums=albums, searchby=my_search_criteria) == [LAWoman]
 
 This principle is by Barbara Liskov, who formulated her principle very formally:
 >“Let φ(x) be a property provable about objects x of type T. Then φ(y) should be true for objects y of type S where S is a subtype of T.”
+
+<figure>
+	<img src="http://alexandrasouly.github.io/images/ravi-singh-rN3dqzDrhdk-unsplash.jpg">
+	<figcaption >If it looks like a duck and quacks like a duck but it needs batteries, you probably have the wrong abstraction. — 📸 Ravi Singh on Unplash</figcaption>
+</figure>
 
 This means that if we have a base class T and subclass S, you should be able to substitute the main class T with the subclass S without breaking the code. The interface of a subclass should be the same as the interface of the base class, and the subclass should behave in the same way as the base class.
 
@@ -243,12 +254,11 @@ def get_squashed_height_area(Rectangle):
 
 rectangle = Rectangle(5, 5)
 square = Square(5)
-
 assert get_squashed_height_area(rectangle) == 5  # expected 5
 assert get_squashed_height_area(square) == 1  # expected 5
 ```
 
-While this might not seem a big deal (surely you can just remember sqaure changes the width too?!), this becomes a bigger issue when the functions are more complicated or when you are using some else's code, and just assume the subclass behaves the same.
+While this might not seem a big deal (surely you can just remember sqaure changes the width too?!), this becomes a bigger issue when the functions are more complicated or when you are using some else’s code, and just assume the subclass behaves the same.
 
 A short, but intuitive example I really like from the [Circle-ellipse problem Wiki article](https://en.wikipedia.org/wiki/Circle%E2%80%93ellipse_problem#Description):
 
@@ -291,15 +301,17 @@ class PlaySongs:
     def sing_lyrics(self):
         print("NaNaNaNa")
 
+
 # This class is fine, just changing the guitar and lyrics
-class PlayRockSongs(PlaySongs): 
+class PlayRockSongs(PlaySongs):
     def play_guitar(self):
         print("*Very metal guitar solo*")
 
     def sing_lyrics(self):
         print("I wanna rock and roll all night")
 
-# This breaks the ISP, we don't have lyrics 
+
+# This breaks the ISP, we don't have lyrics
 class PlayInstrumentalSongs(PlaySongs):
     def sing_lyrics(self):
         raise Exception("No lyrics for instrumental songs")
@@ -353,6 +365,12 @@ The last principle says
 > 1. High-level modules should not depend on low-level modules. Both should depend on abstractions (e.g. interfaces).
 > 2. Abstractions should not depend on details. Details (concrete implementations) should depend on abstractions.
 
+<figure>
+	<img src="http://alexandrasouly.github.io/images/yash-patel-sqpME05mTLE-unsplash.jpg">
+	<figcaption >Would you solder a lamp directly to the electrical wiring in a wall? — 📸 Yash Patel</figcaption>
+</figure>
+
+
 If your code has well-defined abstract interfaces, changing the internal implementation of one class shouldn't break your code. A class it interacts with should not have knowledge of the inner workings of the other class, and should be unaffected as long as the interfaces are the same. An example would be changing the type of database you use (SQL or NoSQL) or changing the data structure you store your data in (dictionary or list).
 
 This is illustrated in the following example, where ViewRockAlbums explicitly depends on the fact that albums are stored in a tuple in a certain order inside AlbumStore. It should have no knowledge of the internal structure of Albumstore. Now if we change the ordering in the tuples in the album, our code would break.
@@ -367,7 +385,7 @@ class AlbumStore:
 
 class ViewRockAlbums:
     def __init__(self, album_store):
-        for album in album_store:
+        for album in album_store.albums:
             if album[2] == "Rock":
                 print(f"We have {album[0]} in store.")
 ```
@@ -377,8 +395,9 @@ Instead, we need to add an abstract interface to AlbumStore to hide the details,
 ```python
 class GeneralAlbumStore:
     @abstractmethod
-    def filter_by_genre(self, genre)
+    def filter_by_genre(self, genre):
         pass
+
 
 class MyAlbumStore(GeneralAlbumStore):
     albums = []
@@ -390,6 +409,7 @@ class MyAlbumStore(GeneralAlbumStore):
         if album[2] == "Rock":
             yield album[0]
 
+
 class ViewRockAlbums:
     def __init__(self, album_store):
         for album_name in album_store.filter_by_genre("Rock"):
@@ -398,4 +418,17 @@ class ViewRockAlbums:
 
 ### Conclusion
 
-The SOLID design principles are meant to be a guideline to write maintainable, expandable and easy to understand code. It is worth keeping them in mind next time you think of a design, to write SOLID code.
+The SOLID design principles are meant to be a guideline to write maintainable, expandable and easy to understand code. It is worth keeping them in mind next time you think of a design, to write SOLID code. Just go through the letters in your mind, recalling what each of them meant:
+
+1. Single Responsibility Principle
+2. Open/Closed Principle
+3. Liskov Substitution Principle
+4. Interface Segregation Principle
+5. Dependency Inversion Principle
+
+Now go and make the world a better place codebase by codebase!
+
+<figure>
+	<img src="http://alexandrasouly.github.io/images/martin-w-kirst-Ap3fFS0iOiE-unsplash.jpg">
+	<figcaption >Photo by Martin W. Kirst on Unsplash</figcaption>
+</figure>
