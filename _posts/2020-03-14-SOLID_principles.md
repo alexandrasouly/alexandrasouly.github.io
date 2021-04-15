@@ -18,7 +18,12 @@ As someone who recently started working as a Software Engineer with no formal Co
 
 SOLID is the acronym for a collection of 5 object-oriented design principles, first conceptualised by Robert C. Martin about 20 years ago, and they have shaped the way we write software today.
 
-They are meant to help creating simpler, more easily understandable, maintainable and expandable code. This becomes essential when a large group of people is working on codebases that are always growing and evolving, often made up of  houndreds of thousands (if not millions) of lines of code. The principles are signposting the way to maintaining good practice, and writing better quality code.
+<figure>
+	<a<img src="http://alexandrasouly.github.io/images/thisisengineering-raeng-64YrPKiguAE-unsplash.jpg"></a>
+	<figcaption><a title="Photo by ThisisEngineering RAEng on Unsplash">Photo by ThisisEngineering RAEng on Unsplash</a>.</figcaption>
+</figure>
+
+They are meant to help creating simpler, more easily understandable, maintainable and expandable code. This becomes essential when a large group of people is working on codebases that are always growing and evolving, often made up of hundreds of thousands (if not millions) of lines of code. The principles are signposting the way to maintaining good practice, and writing better quality code.
 
 The letters stand for:
 
@@ -34,7 +39,7 @@ They are all simple concepts that are easy to grasp, but really valuable when wr
 
 >A class should have one, and only one, reason to change.
 
-This is probably the most intuitive principle, also true for software components or microservices. Having "only one reason to change" could be restated as having "only one responsibility". This makes code more robust and flexible, easier to understand for someone else, and you will avoid some unexpected side-effects when changing existing code. You will also need to make fewer changes: the more independent reasons a class has to change, the more often it has to change. If you have lots of classes depending on each other, the number of changes you need to make might grow exponentially. The more complicated your classes are, the more difficult it is to change them without unexpected consequences.
+This is probably the most intuitive principle, also true for software components or microservices. Having “only one reason to change” could be restated as having “only one responsibility”. This makes code more robust and flexible, easier to understand for someone else, and you will avoid some unexpected side-effects when changing existing code. You will also need to make fewer changes: the more independent reasons a class has to change, the more often it has to change. If you have lots of classes depending on each other, the number of changes you need to make might grow exponentially. The more complicated your classes are, the more difficult it is to change them without unexpected consequences.
 
 ```python
 class Album:
@@ -43,18 +48,23 @@ class Album:
         self.artist = artist
         self.songs = songs
 
+
     def add_song(self, song):
         self.songs.append(song)
+
 
     def remove_song(self, song):
         self.songs.remove(song) 
 
+
     def __str__(self) -> str:
         return f"Album {self.name} by {self.artist}\nTracklist:\n{self.songs}"
+
 
     # breaks the SRP
     def search_album_by_artist(self):
         """ Searching the database for other albums by same artist """
+        
         pass
 ```
 In the above example, I have created a class `Album`. This stores the album name, artist and tracklist, and can manipulate the contents of the album, such as adding songs or deleting. Now, if I add a function to search albums from the same artist, I break the Single Responsibility Principle. My class would have to change if I decide to store albums in a different way (for example by adding the record label or storing the tracklist as a dictionary of track name and length), and my class would also need to change if I change the database where I store these albums ( for example I move to an online database from an Excel sheet). It is clear that these are two distinct responsabilities.  
