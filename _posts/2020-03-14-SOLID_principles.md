@@ -2,7 +2,7 @@
 title: "5 Principles to write SOLID Code"
 excerpt: "The SOLID design principles explained with examples in Python."
 categories:
-  - Blog
+  - Programming
 tags:
   - design pattern
   - coding
