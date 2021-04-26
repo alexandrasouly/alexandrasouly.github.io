@@ -14,7 +14,7 @@ comments: true
 
 Are you also constantly wondering what to learn next?  
 
- If you feel like your Machine Learning foundations are a bit shaky, and you would like to start Kaggle but feel intimidated, then you are in a similar situation to me a couple of months ago. I have found a solution to both of my problems, and I'm excited to share it with you! 
+ If you feel like your Machine Learning foundations are a bit shaky, then you are in a similar situation to me a couple of months ago. If you wanted to start Kaggle, but was too intimidated by all the available techniques to use, I feel you. I have found a solution to both of these problems, and I'm excited to share it with you! 
 
 In this article, I will share my experiences working through the textbook Introduction to Statistical Learning in R (abbreviated as ISLR). I hope this helps you figure out whether you should pick it up too, and I'll also share some tips to make your studies more efficient.
 
