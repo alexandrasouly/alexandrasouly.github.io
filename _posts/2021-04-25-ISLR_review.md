@@ -14,13 +14,13 @@ comments: true
 
 Are you also constantly wondering what to learn next?  
 
- If you feel like your Machine Learning foundations are a bit shaky, then you are in a similar situation to me a couple of months ago. If you wanted to start Kaggle, but was too intimidated by all the available techniques to use, I feel you. I have found a solution to both of these problems, and I'm excited to share it with you! 
+ A couple of months ago, I felt that my Machine Learning foundations were a bit too shaky. I wanted to start Kaggle, but I was too intimidated by all the available techniques to use. I wanted to change this as efficiently as possible, and I did. I have found a solution to both of my problems, and I'm excited to share it with you! 
 
 In this article, I will share my experiences working through the textbook Introduction to Statistical Learning in R (abbreviated as ISLR). I hope this helps you figure out whether you should pick it up too, and I'll also share some tips to make your studies more efficient.
 
 <figure>
 	<img src="http://alexandrasouly.github.io/images/janko-ferlic-sfL_QOnmy00-unsplash.jpg">
-	<figcaption >So many books to learn from, so little time (Photo by Janko Ferlič on Unsplash)</figcaption>
+	<figcaption >So many books to learn from, so little time... (Photo by Janko Ferlič on Unsplash)</figcaption>
 </figure>
 
 ### Why I picked ISLR
@@ -51,6 +51,12 @@ After the first chapter, all further chapters are around a selected technique, s
 
 In every chapter, the focus is on a high-level understanding of the concept and good intuition. I found that the amount of detail was sufficient for what I needed the book for, to confidently use the implementation of a method in my own projects. It compares similar methods by listing pros and cons, and gives examples when one method would be better over another method. The authors are illustrating every method with simple datasets and plausible real-life examples, which further help with intuition. I have particularly liked the colorful plots and graphs on nearly every page - whenever something new is explained, there is a plot for illustrating the concept on data. 
 
+<figure>
+	<img src="http://alexandrasouly.github.io/images/ben-white-4K2lIP0zc_k-unsplash (1).jpg">
+	<figcaption >Accessible to all Maths background *AND* pretty pictures | Photo by <a href="https://unsplash.com/@benwhitephotography?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Ben White</a> on <a href="https://unsplash.com/s/photos/happy-reading?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+  </figcaption>
+</figure>
+
 ### Who is ISLR recommended for?
 
 I think you would definitely get a lot of value out of reading the book, if any of the following applies: 
@@ -60,12 +66,6 @@ I think you would definitely get a lot of value out of reading the book, if any 
 - you know how the algorithms work in theory, but don't know how to start implementing them
 - you want a preparatory textbook that explains intuition, before jumping into the Maths heavy grad-level textbooks
 - you want to remind yourself of the Maths behind algorithms before Data Science interviews. The material in this book was very helpful (and sufficient) for several Data Scientist grad job interview online rounds according to some of my friends.
-
-<figure>
-	<img src="http://alexandrasouly.github.io/images/siora-photography-hgFY1mZY-Y0-unsplash (1).jpg">
-	<figcaption >Photo by <a href="https://unsplash.com/@siora18?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Siora Photography</a> on <a href="https://unsplash.com/s/photos/reading?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
-  </figcaption>
-</figure>
 
 ### Some tips 
 
@@ -90,6 +90,12 @@ If you want to keep yourself accountable, here's an estimate how you could set y
 
 Working through a textbook alone can be a bit demotivating - no reminders and red pop-ups like on online courses. I recommend you set yourself a goal for finishing each chapter by some specified date to keep yourself motivated. This is such a popular book that you can probably find some accountability buddies on Reddit too.
 
+<figure>
+	<img src="http://alexandrasouly.github.io/images/siora-photography-hgFY1mZY-Y0-unsplash (1).jpg">
+	<figcaption >Reading a textbook alone is hard work | Photo by <a href="https://unsplash.com/@siora18?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Siora Photography</a> on <a href="https://unsplash.com/s/photos/reading?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+  </figcaption>
+</figure>
+
 ### What to do next?
 
 If you have finished the book, you should feel a bit more comfortable applying Machine Learning methods to solve your chosen problems. You are probably ready to start experimenting with datasets and practicing on Kaggle if you're interested. I recommend starting out with the [Tabular Playground Series](https://www.kaggle.com/c/tabular-playground-series-apr-2021) if you are looking for a gentle competition experience. These datasets are easy to work with, don't take up a lot of computational resources and perfect for trying out various simple models. I can wholeheartedly recommend the article [Progressively approaching Kaggle by Rohan Rao](https://towardsdatascience.com/progressively-approaching-kaggle-f58db71a42a9) if you would like to know more on that.
@@ -97,8 +103,3 @@ If you have finished the book, you should feel a bit more comfortable applying M
 If you just can't get enough of the Maths you've learnt in ISLR and have a solid foundation on Linear Algebra and Calculus, I recommend you go and check out [The Elements of Statistical Learning](https://web.stanford.edu/~hastie/ElemStatLearn/)(ESL). ISLR is technically the introductory book to ESL, which goes into the Maths *a lot more*, and is intended more to be a reference book for PhD students and researchers than something you just read through.
 
 Whatever you decide to do next, I hope you found this review useful, and I wish you good luck on your Machine Learning journey! 
-
-<figure>
-	<img src="http://alexandrasouly.github.io/images/">
-	<figcaption >Photo by  on Unsplash</figcaption>
-</figure>
